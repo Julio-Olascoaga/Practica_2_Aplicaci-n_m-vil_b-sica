@@ -247,11 +247,11 @@ Checklist de pruebas manuales realizadas antes de la entrega (marcar con [x] las
 
 ## Conclusiones
 
-> **Pendiente de personalizar por Julio después de probar la app en el emulador.** Sugerencia de estructura (bórrala o reescríbela con tu experiencia real):
->
-> - Principales retos técnicos que encontraste (por ejemplo: configurar `10.0.2.2` para que el emulador alcance el backend, manejar el token JWT entre pantallas, o el manejo de estados de carga/error en Compose).
-> - Qué lograste completar y qué tan bien cumple con lo pedido en la especificación.
-> - Dificultades específicas y cómo las resolviste (mensajes de error que viste, qué revisaste, qué cambiaste).
+El principal reto no estuvo en el código en sí, sino en las pruebas manuales del backend antes de tocar la app: al probar los endpoints con `curl` desde PowerShell en Windows me encontré con que `curl` en PowerShell en realidad es un alias de `Invoke-WebRequest`, que espera los encabezados como una tabla y no como texto plano (`-H "Content-Type: application/json"`), lo que producía un error de "Cannot bind parameter 'Headers'". Cambiar a `curl.exe` evitó ese error puntual, pero después el JSON llegaba mal formado porque PowerShell no interpreta `\"` como comilla escapada de la misma forma que Bash. La solución que mejor funcionó fue dejar de pelear con el escapado de comillas y usar el cmdlet nativo `Invoke-RestMethod` de PowerShell junto con `ConvertTo-Json`, que arma el cuerpo JSON automáticamente a partir de una tabla de PowerShell (`@{ username = "..."; password = "..." }`) y evita por completo el problema de comillas. Con eso pude comprobar sin problema las cuatro operaciones CRUD y confirmar que un `GET /tareas` sin token responde `401`.
+
+En la app Android, el otro punto que requirió atención fue recordar que `localhost` dentro del emulador de Android Studio apunta al propio emulador y no a mi computadora, por lo que el cliente Retrofit debía apuntar a `10.0.2.2:5000` para poder llegar al backend corriendo en Docker.
+
+En cuanto a los logros: quedaron implementadas y probadas de punta a punta las cuatro operaciones CRUD sobre el recurso Tarea, el registro y login con contraseñas hasheadas con bcrypt, sesiones basadas en JWT con expiración que protegen los endpoints de tareas (verificado con la prueba de `401` sin token), y el flujo completo de la app (registro, login, crear/editar/completar/borrar tareas y manejo de credenciales incorrectas) probado en el emulador con las capturas correspondientes en `docs/`.
 
 ---
 
