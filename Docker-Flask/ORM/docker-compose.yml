@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  web:
+    # Construir usando el Dockerfile del directorio actual (.)
+    build: .
+    container_name: flask_login_backend
+
+    # Mapeo de puertos: Puerto PC : Puerto Contenedor
+    ports:
+      - "5000:5000"
+
+    # Variables de entorno (llave secreta de JWT, etc.)
+    # Copia .env.example como .env antes de levantar el servicio.
+    env_file:
+      - .env
+
+    # Volumenes: sincroniza tu carpeta actual con /app en el contenedor.
+    volumes:
+      - .:/app
