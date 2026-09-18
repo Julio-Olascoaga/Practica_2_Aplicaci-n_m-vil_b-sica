@@ -220,7 +220,7 @@ Checklist de pruebas manuales realizadas antes de la entrega (marcar con [x] las
 
 - [x] Las contraseñas se guardan hasheadas: al inspeccionar `site.db` (por ejemplo con `sqlite3 site.db "SELECT username, password FROM user;"` dentro del contenedor) el campo `password` nunca aparece en texto plano, siempre como hash de bcrypt (`$2b$...`).
 - [x] `GET /tareas` sin encabezado `Authorization` responde `401` (probado con `Invoke-RestMethod` desde PowerShell).
-- [ ] `GET /tareas` con un token inválido o mal formado responde `401`.
+- [x] `GET /tareas` con un token inválido o mal formado responde `401`.
 - [x] `POST /login` con credenciales incorrectas responde `401` y no revela si el usuario existe o no (probado desde la app: pantalla "Credenciales inválidas").
 - [x] `POST /register` con un usuario ya existente responde `400` y no crea un registro duplicado.
 - [x] Las cuatro operaciones CRUD (`POST`, `GET`, `PUT`, `DELETE` sobre `/tareas`) funcionan correctamente con un token válido (probadas con `Invoke-RestMethod` y desde la app Android).
