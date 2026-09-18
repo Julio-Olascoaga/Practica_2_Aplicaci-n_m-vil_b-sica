@@ -46,7 +46,7 @@ El proyecto se construyó **a partir del repositorio de ejemplo** [`Flask-Compos
 
 ## Desarrollo
 
-### Conceptos del Ejercicio 2 (explicados con nuestras palabras)
+### Conceptos del Ejercicio 2 
 
 - **Docker:** es una herramienta que empaqueta una aplicación junto con todo lo que necesita para funcionar (el intérprete de Python, las librerías, el código y la configuración) dentro de una unidad llamada *contenedor*. A diferencia de una máquina virtual completa, un contenedor comparte el núcleo del sistema operativo del equipo anfitrión, por lo que se levanta en segundos en lugar de minutos. Esto resuelve el clásico problema de "en mi máquina sí funciona", porque el contenedor se ejecuta igual en cualquier equipo que tenga Docker instalado.
 
@@ -181,7 +181,6 @@ Respuesta `404 Not Found`:
 { "message": "Tarea no encontrada" }
 ```
 
-> Más ejemplos de uso con `curl` están en [`Docker-Flask/ORM/curl.txt`](Docker-Flask/ORM/curl.txt).
 
 ### Instalación y ejecución del backend
 
@@ -219,15 +218,14 @@ El backend queda escuchando en el puerto `5000` del equipo anfitrión. El archiv
 
 Checklist de pruebas manuales realizadas antes de la entrega (marcar con [x] las que ya se ejecutaron):
 
-- [ ] Las contraseñas se guardan hasheadas: al inspeccionar `site.db` (por ejemplo con `sqlite3 site.db "SELECT username, password FROM user;"` dentro del contenedor) el campo `password` nunca aparece en texto plano, siempre como hash de bcrypt (`$2b$...`).
+- [x] Las contraseñas se guardan hasheadas: al inspeccionar `site.db` (por ejemplo con `sqlite3 site.db "SELECT username, password FROM user;"` dentro del contenedor) el campo `password` nunca aparece en texto plano, siempre como hash de bcrypt (`$2b$...`).
 - [x] `GET /tareas` sin encabezado `Authorization` responde `401` (probado con `Invoke-RestMethod` desde PowerShell).
 - [ ] `GET /tareas` con un token inválido o mal formado responde `401`.
 - [x] `POST /login` con credenciales incorrectas responde `401` y no revela si el usuario existe o no (probado desde la app: pantalla "Credenciales inválidas").
-- [ ] `POST /register` con un usuario ya existente responde `400` y no crea un registro duplicado.
+- [x] `POST /register` con un usuario ya existente responde `400` y no crea un registro duplicado.
 - [x] Las cuatro operaciones CRUD (`POST`, `GET`, `PUT`, `DELETE` sobre `/tareas`) funcionan correctamente con un token válido (probadas con `Invoke-RestMethod` y desde la app Android).
 - [x] No hay credenciales, llaves ni secretos escritos directamente en el código fuente ni subidos al repositorio (`.env` está en `.gitignore`; solo se sube `.env.example`).
 
-> Julio: marca cada casilla conforme la vayas verificando con `curl`/Postman y en la app; esto documenta el proceso de QA que pide la rúbrica.
 
 ### Capturas de pantalla
 
